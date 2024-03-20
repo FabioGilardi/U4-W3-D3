@@ -5,14 +5,17 @@ import FabioGilardi.dao.EventsDAO;
 import FabioGilardi.dao.LocationDAO;
 import FabioGilardi.dao.PartecipationDAO;
 import FabioGilardi.dao.PersonDAO;
-import FabioGilardi.entities.Events;
-import FabioGilardi.exceptions.NotFoundException;
+import FabioGilardi.entities.Partecipation;
+import FabioGilardi.entities.Person;
 import com.github.javafaker.Faker;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Application {
 
@@ -44,21 +47,21 @@ public class Application {
 //        }
 
 //        LETTURA EVENTI
-        try {
-            Events event1 = eventsDAO.findById(4);
-            System.out.println(event1);
-            Events event2 = eventsDAO.findById(11);
-            System.out.println(event2);
-        } catch (NotFoundException e) {
-            System.out.println(e.getMessage());
-        }
-
-//        RIMOZIONE EVENTI
-        try {
-            eventsDAO.deletFromDB(20);
-        } catch (NotFoundException e) {
-            System.out.println(e.getMessage());
-        }
+//        try {
+//            Events event1 = eventsDAO.findById(4);
+//            System.out.println(event1);
+//            Events event2 = eventsDAO.findById(11);
+//            System.out.println(event2);
+//        } catch (NotFoundException e) {
+//            System.out.println(e.getMessage());
+//        }
+//
+////        RIMOZIONE EVENTI
+//        try {
+//            eventsDAO.deletFromDB(20);
+//        } catch (NotFoundException e) {
+//            System.out.println(e.getMessage());
+//        }
 
 //        U4-W3-D3 -----------------------------------------------------------------------------------------------
 //        locationDAO.saveOnDB(new Location("Palataurus", "Lecco"));
@@ -69,7 +72,14 @@ public class Application {
 //        partecipationDAO.saveOnDB(new Partecipation(eventsDAO.findById(1), Status.CONFIRMED));
 //        System.out.println(partecipationDAO.findById(1));
 
+        Partecipation firstPartecipation = partecipationDAO.findById(1);
+        Partecipation secondPartecipation = partecipationDAO.findById(2);
+        Person firstPerson = personDAO.findById(1);
+        firstPerson.setPartecipationList(new ArrayList<>(Arrays.asList(firstPartecipation, secondPartecipation)));
+        personDAO.saveOnDB(firstPerson);
 
+        firstPerson.getPartecipationList().forEach(System.out::println);
+        
         em.close();
         emf.close();
     }
