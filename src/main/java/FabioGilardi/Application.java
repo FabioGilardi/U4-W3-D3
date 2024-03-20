@@ -5,7 +5,6 @@ import FabioGilardi.dao.EventsDAO;
 import FabioGilardi.dao.LocationDAO;
 import FabioGilardi.dao.PartecipationDAO;
 import FabioGilardi.dao.PersonDAO;
-import FabioGilardi.entities.Partecipation;
 import FabioGilardi.entities.Person;
 import com.github.javafaker.Faker;
 import jakarta.persistence.EntityManager;
@@ -13,9 +12,6 @@ import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.ArrayList;
-import java.util.Arrays;
 
 public class Application {
 
@@ -72,14 +68,14 @@ public class Application {
 //        partecipationDAO.saveOnDB(new Partecipation(eventsDAO.findById(1), Status.CONFIRMED));
 //        System.out.println(partecipationDAO.findById(1));
 
-        Partecipation firstPartecipation = partecipationDAO.findById(1);
-        Partecipation secondPartecipation = partecipationDAO.findById(2);
+//        Partecipation firstPartecipation = partecipationDAO.findById(1);
+//        Partecipation secondPartecipation = partecipationDAO.findById(2);
         Person firstPerson = personDAO.findById(1);
-        firstPerson.setPartecipationList(new ArrayList<>(Arrays.asList(firstPartecipation, secondPartecipation)));
-        personDAO.saveOnDB(firstPerson);
+//        firstPerson.setPartecipationList(new ArrayList<>(Arrays.asList(firstPartecipation, secondPartecipation)));
+//        personDAO.saveOnDB(firstPerson);
 
         firstPerson.getPartecipationList().forEach(System.out::println);
-        
+
         em.close();
         emf.close();
     }
